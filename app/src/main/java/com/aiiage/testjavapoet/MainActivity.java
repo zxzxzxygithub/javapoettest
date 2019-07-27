@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         str1+=HelloWorld.hello2()+" ";
         str1+=HelloWorld.hello3();
         str1+=Myrouter.doHello()+"";
+        str1+=KAnnotationTest.kHhello1()+"";
         tv.setText(str1);
     }
 }

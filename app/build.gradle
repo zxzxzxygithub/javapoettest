@@ -1,5 +1,11 @@
 apply plugin: 'com.android.application'
 
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -21,16 +27,23 @@ android {
         targetCompatibility = 1.8
     }
 }
+kapt {
+    arguments {
+        arg("app_module_name", project.getName())
+    }
+}
 
 dependencies {
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0-alpha3'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    //必须使用annotationProcessor，而不是implementation
-    //annotationProcessor修饰的，最终不会打包到apk中，可理解为在编译时执行的
-    annotationProcessor project(':javapoet')
+    // 单纯java的时候用这个
+    // annotationProcessor project(':javapoet')
+    // 项目包含kotlin的时候用这个
+    kapt project(':javapoet')
     implementation project(':libannotation')
 }
